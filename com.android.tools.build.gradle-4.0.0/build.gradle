@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "com.angcyo.android_gradle_dsl_40"
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += [
+                '../gradle-6.1.1/src/core',
+                '../gradle-6.1.1/src/core-api',
+                '../gradle-6.1.1/src/base-services',
+                '../gradle-6.1.1/src/base-services-groovy',
+                '../gradle-6.1.1/src/logging',
+                '../gradle-6.1.1/src/plugins',
+                '../gradle-6.1.1/src/diagnostics',
+                '../gradle-6.1.1/src/ide-native',
+                '../gradle-6.1.1/src',
+        ]
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name != "debug") {
+            variant.packageApplicationProvider.get().outputDirectory = rootProject.file("/apk")
+        }
+
+        variant.outputs.forEach {
+            it.apkData.outputFileName = "test.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
