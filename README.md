@@ -88,6 +88,15 @@ applicationVariants.all { variant ->
 }
 ```
 
+**注意:**`ApplicationVariantImpl`有2个:
+
+```groovy
+com.android.build.api.variant.impl.ApplicationVariantImpl
+com.android.build.gradle.internal.api.ApplicationVariantImpl
+
+// com.android.build.gradle.internal.api.ApkVariantImpl.getPackageApplicationProvider
+```
+
 查看继承关系, 以及对应源码找到:`ComponentProperties`类的`val outputs:List<VariantOutput>`成员.
 
 # 关键类3 ApkVariantOutputImpl
@@ -104,7 +113,7 @@ applicationVariants.all { variant ->
 
 # 关键类4 ApkData
 
-查看类`ApkData`, 引入眼前的`private String outputFileName;`成员.试一试, 应该就是它了.
+查看类`ApkData`, 映入眼前的`private String outputFileName;`成员.试一试, 应该就是它了.
 
 ```groovy
 applicationVariants.all { variant ->
